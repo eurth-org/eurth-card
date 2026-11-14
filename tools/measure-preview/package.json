@@ -1,0 +1,12 @@
+{
+  "name": "eurth-card-measure-preview",
+  "private": true,
+  "type": "module",
+  "description": "Measures what it costs to draw a card's link preview outside a browser. Kept apart from the site: nothing here is built or deployed.",
+  "scripts": {
+    "measure": "node --experimental-strip-types --no-warnings measure.ts"
+  },
+  "dependencies": {
+    "@resvg/resvg-wasm": "^2.6.2"
+  }
+}
