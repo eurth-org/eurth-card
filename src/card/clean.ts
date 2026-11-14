@@ -106,5 +106,6 @@ function attribute(tag: string, name: string): number | undefined {
 export function ratio(width: number | undefined, height: number | undefined): number | undefined {
   if (!width || !height || !Number.isFinite(width) || !Number.isFinite(height)) return undefined;
   if (width <= 0 || height <= 0) return undefined;
-  return Math.min(5, Math.max(0.2, width / height));
+  // Three decimals is finer than a pixel on any card, and keeps a card's link short.
+  return Math.round(Math.min(5, Math.max(0.2, width / height)) * 1000) / 1000;
 }

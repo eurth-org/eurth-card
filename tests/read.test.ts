@@ -226,7 +226,7 @@ describe("someone else's input", () => {
   it('adds the namespace an image needs', () => {
     expect(readCard({ arms: { svg: '<?xml version="1.0"?>\n<svg viewBox="0 0 10 12"><path/></svg>' } }).arms).toEqual({
       svg: '<?xml version="1.0"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 12"><path/></svg>',
-      ratio: 10 / 12,
+      ratio: 0.833,
     });
   });
 
