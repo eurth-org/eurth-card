@@ -1,7 +1,8 @@
-.DS_Store
 node_modules/
 dist/
 .astro/
 .wrangler/
+.lighthouseci/
+.DS_Store
 .claude/
 out/

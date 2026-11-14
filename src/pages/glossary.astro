@@ -1,0 +1,34 @@
+---
+// The glossary: each term has an id to link to, and the whole set is given to search engines
+// as a DefinedTermSet.
+import { definedTermSet } from '@eurth/style/build';
+import Page from '@eurth/style/components/Page.astro';
+import { site } from '../../eurth.config.mjs';
+import { TERMS } from '../content/glossary.ts';
+
+const terms = [...TERMS];
+---
+
+<Page
+  site={site}
+  title="Glossary of country fact card terms"
+  description="The words used in Card, explained in a sentence or two each: demonym, head of state, GDP, infobox, link preview, Open Graph, profile file and more."
+  crumbs={[{ name: 'Glossary', path: '/glossary/' }]}
+  jsonld={[definedTermSet(site, { name: 'Glossary of country fact card terms', path: '/glossary/', terms })]}
+>
+  <article class="eu-prose">
+    <p class="eu-kicker">Glossary</p>
+    <h1>Glossary of country fact card terms</h1>
+    <p class="eu-lead">The words this tool uses, in a sentence or two each. See the <a href="/guide/">guide</a> for how they fit together, or go straight to the <a href="/">card</a>.</p>
+    <dl>
+      {
+        terms.map((entry) => (
+          <>
+            <dt id={entry.id}>{entry.term}</dt>
+            <dd>{entry.definition}</dd>
+          </>
+        ))
+      }
+    </dl>
+  </article>
+</Page>

@@ -5,7 +5,7 @@ import { SECTIONS, type CardData, type SectionName } from '../src/card/model.ts'
 
 /** One of the three example profiles, as the file holds it. */
 export function example(name: 'hesperwick' | 'vantmoor' | 'calderwyn'): Record<string, unknown> {
-  const path = fileURLToPath(new URL(`../src/data/examples/${name}.eurth.json`, import.meta.url));
+  const path = fileURLToPath(new URL(`../node_modules/@eurth/profile/examples/${name}.eurth.json`, import.meta.url));
   return JSON.parse(readFileSync(path, 'utf8')) as Record<string, unknown>;
 }
 

@@ -1,0 +1,156 @@
+---
+// The guide: how to fill a nation's profile across the tools, and what each part does for the
+// card. The tool-by-tool part is made from the tools that have launched when the site is built,
+// so the page never mentions a tool before its door opens.
+import { article, launchedTools, ref, wikipedia } from '@eurth/style/build';
+import Page from '@eurth/style/components/Page.astro';
+import { site } from '../../eurth.config.mjs';
+import { FORMATS } from '../card/formats.ts';
+import { SECTION_LABEL } from '../card/model.ts';
+import { FORMAT_USES, TOOL_PARTS } from '../content/guide.ts';
+
+const updated = '2026-11-15';
+const headline = 'How to fill a nation profile, tool by tool';
+const description = 'How a nation profile is filled across the Eurth tools, what each part adds to the country fact card, and how to share the card. With sources.';
+
+const launched = new Map(launchedTools().map((tool) => [tool.id, tool]));
+const parts = TOOL_PARTS.flatMap((part) => {
+  const tool = launched.get(part.tool);
+  return tool && tool.id !== site.id ? [{ ...part, name: tool.name, href: ref(tool.url, site.host) }] : [];
+});
+---
+
+<Page site={site} title={headline} description={description} crumbs={[{ name: 'Guide', path: '/guide/' }]} jsonld={[article(site, { headline, path: '/guide/', description, updated })]}>
+  <article class="eu-prose">
+    <p class="eu-kicker">Guide</p>
+    <h1>{headline}</h1>
+    <p class="eu-lead">
+      A country fact card is the last page of a long piece of work: the flag, the government, the numbers, the history. This guide says where each part comes from
+      and what it does for the card.
+    </p>
+
+    <h2>The profile file</h2>
+    <p>
+      Eurth's tools are separate sites with no accounts, and none of them stores anything. What joins them is one small file, named after your nation and ending in
+      <code>.eurth.json</code>: the <a href="/glossary/#profile-file">profile file</a>. Each tool fills in its own <a href="/glossary/#section">section</a> and
+      leaves the rest exactly as it found it. You save the file from one tool and load it in the next, and it stays on your own device the whole way.
+    </p>
+    <p>
+      Card is where the file ends up. It reads all sixteen sections and puts what it finds on one card. It changes almost nothing: you can type a name, a capital
+      and a motto here, and everything else is the work of the tool that owns it.
+    </p>
+
+    <h2>Start small</h2>
+    <p>
+      A card does not wait for a finished nation. A name alone makes a card, set large in the middle. Add a flag and the card has a face. Add the population and
+      the form of government and it reads like an entry in an almanac. Each section you fill moves the card on, and at every stage it looks finished: nothing is
+      left as an empty box.
+    </p>
+    <p>
+      If you only have an evening, give it to three things: the names and the capital, the flag, and the two numbers everyone asks for, population and
+      <a href="/glossary/#gdp">GDP</a>.
+    </p>
+
+    <h2>What the card shows first</h2>
+    <p>
+      Six <a href="/glossary/#key-facts">key facts</a> come before all others: capital, population, government, head of state, GDP and currency. Then the
+      <a href="/glossary/#seat-chart">seat chart</a>, then the <a href="/glossary/#timeline-strip">timeline</a>, then whatever else the profile holds. A link
+      preview has room for the six facts, the chart and a strip of history; a story has room for twelve facts and the parties' names. When a format runs short,
+      the card drops the extras first and the key facts last, and it draws things a little closer together before it lets a key fact go.
+    </p>
+    <p>
+      Some facts the card works out for itself. With a population and an area it gives the <a href="/glossary/#density">density</a>; with a population and a GDP
+      it gives GDP per person. It never says the same thing twice: a president who also heads the government is named once, and the largest city is left out when
+      it is the capital.
+    </p>
+
+    {
+      parts.length > 0 && (
+        <>
+          <h2>Tool by tool</h2>
+          <p>Each tool, in the order they opened, and what its part of the profile adds to the card.</p>
+          {parts.map((part) => (
+            <>
+              <h3>
+                <a href={part.href} data-same-tab>
+                  {part.name}
+                </a>{' '}
+                {part.does}
+              </h3>
+              <p>
+                {part.adds} <span class="eu-muted">Fills: {part.sections.map((section) => SECTION_LABEL[section].toLowerCase()).join(' and ')}.</span>
+              </p>
+            </>
+          ))}
+        </>
+      )
+    }
+
+    <h2>Every section filled</h2>
+    <p>
+      A profile with all sixteen sections filled earns its card a <a href="/glossary/#gold-edge">gold edge</a>: a double line round the whole card. It is the only
+      thing on a card that the nation did not write itself.
+    </p>
+
+    <h2>Choosing a format</h2>
+    <p>The same card comes in six shapes. Pick the one that fits where it is going.</p>
+    <dl>
+      {
+        FORMATS.map((entry) => (
+          <>
+            <dt>
+              {entry.name}, {entry.width} by {entry.height}
+            </dt>
+            <dd>{FORMAT_USES[entry.id]}</dd>
+          </>
+        ))
+      }
+    </dl>
+    <p>
+      There are three <a href="/glossary/#layout">layouts</a>. Classic is the all-rounder. Banner suits a nation with a flag worth showing large. Ledger suits a
+      nation with a lot to say, and looks most like an official document.
+    </p>
+
+    <h2>Sharing a card</h2>
+    <p>
+      <strong>The link.</strong> Copy link gives an address that holds the whole card, compressed. Anyone who opens it sees your card and can change the format for
+      themselves. Nothing is stored anywhere, so the link is long: a full nation takes about 1,400 characters. A card with a very detailed flag or coat of arms can
+      outgrow what a link carries well; Card says so when it happens, and offers a link without the larger picture.
+    </p>
+    <p>
+      <strong>The picture.</strong> PNG for anywhere, WebP where a smaller file matters. Both are exactly the size the format names. Copy picture puts the PNG on
+      your clipboard, ready to paste into a post.
+    </p>
+    <p>
+      <strong>The description.</strong> Every card has a written version: the name, the motto, each fact, the seats by party and the events in order. Paste it
+      beside the picture as its alternative text, so that readers who can't see the card can still read it.
+    </p>
+    <p>
+      <strong>On the Eurth forum.</strong> Share opens a new topic with the card's name, its key facts and its link already written. Add the picture and post it
+      in your nation's factbook.
+    </p>
+    <p>
+      <strong>On a wiki.</strong> Upload the wide or the link preview picture and put it at the head of your nation's page, with the description as its caption or
+      alternative text. A fact card and a wiki <a href="/glossary/#infobox">infobox</a> do the same job; the card is the one you can carry elsewhere.
+    </p>
+
+    <h2>Try it</h2>
+    <p>
+      Open the <a href="/">card maker</a> and load your profile, or look at the <a href="/examples/">examples</a> first. When the card looks right, give the nation
+      a world: <a href={ref('https://eurth.org', site.host)}>Eurth</a> has one for it to live in.
+    </p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href={ref('https://ogp.me/', site.host)}>The Open Graph protocol</a>: the tags that link previews are built from.</li>
+      <li><a href={wikipedia('Infobox', site.host)}>Infobox</a>, Wikipedia: the box of key facts that a fact card descends from.</li>
+      <li>
+        <a href={ref('https://www.cia.gov/the-world-factbook/', site.host)}>The World Factbook</a>, Central Intelligence Agency: the long-running model for which
+        facts sum a country up.
+      </li>
+      <li><a href={wikipedia('Demonym', site.host)}>Demonym</a> and <a href={wikipedia('Head of state', site.host)}>Head of state</a>, Wikipedia.</li>
+      <li><a href={wikipedia('Gross domestic product', site.host)}>Gross domestic product</a>, Wikipedia: what GDP counts and what it leaves out.</li>
+    </ul>
+    <p class="eu-muted">Last updated <time datetime={updated}>15 November 2026</time>.</p>
+  </article>
+</Page>

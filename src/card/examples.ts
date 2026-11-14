@@ -1,10 +1,14 @@
 // Example nations, to try the card with and to test it against. All four are invented.
-// Calderwyn, Vantmoor and Hesperwick are @eurth/profile's own example profiles (copied here
-// until that package is released); Teland is the nation on Card's first mock-up.
+// Calderwyn, Vantmoor and Hesperwick are @eurth/profile's own example profiles; Teland is the
+// nation on Card's first mock-up.
+//
+// The profiles carry links to the tools that made each section. A page must never hold the
+// address of a tool that hasn't launched, so the site shows the examples as cards and card
+// links (which hold no addresses), never as these profiles themselves.
 
-import calderwyn from '../data/examples/calderwyn.eurth.json' with { type: 'json' };
-import hesperwick from '../data/examples/hesperwick.eurth.json' with { type: 'json' };
-import vantmoor from '../data/examples/vantmoor.eurth.json' with { type: 'json' };
+import calderwyn from '@eurth/profile/examples/calderwyn.eurth.json' with { type: 'json' };
+import hesperwick from '@eurth/profile/examples/hesperwick.eurth.json' with { type: 'json' };
+import vantmoor from '@eurth/profile/examples/vantmoor.eurth.json' with { type: 'json' };
 
 const star = '0,-18 4.11,-5.66 17.12,-5.56 6.66,2.16 10.58,14.56 0,7 -10.58,14.56 -6.66,2.16 -17.12,-5.56 -4.11,-5.66';
 
