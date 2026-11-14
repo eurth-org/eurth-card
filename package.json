@@ -1,0 +1,21 @@
+{
+  "name": "eurth-card",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Card: a free online country fact card maker for worldbuilders, by Eurth. The card's engine and content; the site follows once @eurth/style 1.0.0 is released.",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "sheet": "node --experimental-strip-types --no-warnings tools/contact-sheet.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.1",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
+  }
+}
