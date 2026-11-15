@@ -17,7 +17,8 @@
     "axe": "eurth-axe dist",
     "images": "node tools/make-images.mjs",
     "deploy": "npm run build && wrangler deploy",
-    "sheet": "node --experimental-strip-types --no-warnings tools/contact-sheet.ts"
+    "sheet": "node --experimental-strip-types --no-warnings tools/contact-sheet.ts",
+    "exports": "node tools/check-exports.mjs"
   },
   "dependencies": {
     "@astrojs/svelte": "^9.1.6",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@types/node": "^22.19.1",
+    "playwright-core": "^1.65.1",
     "typescript": "^6.0.3",
     "vitest": "^5.1.0",
     "wrangler": "^4.162.0"

@@ -194,44 +194,6 @@
       {/if}
     </p>
 
-    <section aria-labelledby="sections-title" class="eu-stack sections-block">
-      <h2 id="sections-title" class="eu-label">In the profile: <span class="eu-data">{filled} of {SECTIONS.length}</span> sections{gold ? ', the full set' : ''}</h2>
-      <ul class="sections">
-        {#each SECTIONS as section (section)}
-          {@const there = data.filled.includes(section)}
-          {@const tool = tools[section]}
-          <li>
-            <span class="mark" class:there><Icon icon={there ? faCircleCheck : faCirclePlus} /></span>
-            <span class="what">{SECTION_LABEL[section]}</span>
-            {#if there}
-              <span class="eu-muted">on the card</span>
-            {:else if section === 'identity'}
-              <span class="eu-muted">type it in below</span>
-            {:else if tool}
-              <a href={tool.href} data-same-tab>Make it in {tool.name}</a>
-            {:else}
-              <span class="eu-muted">not yet</span>
-            {/if}
-          </li>
-        {/each}
-      </ul>
-    </section>
-
-    <label class="eu-field">
-      <span class="eu-label">Country</span>
-      <input class="eu-input" value={edits.name ?? source.name} oninput={(event) => (edits.name = event.currentTarget.value)} maxlength="80" autocomplete="off" placeholder="Your nation's name" />
-    </label>
-    <div class="pair">
-      <label class="eu-field">
-        <span class="eu-label">Capital</span>
-        <input class="eu-input" value={edits.capital ?? source.capital ?? ''} oninput={(event) => (edits.capital = event.currentTarget.value)} maxlength="80" autocomplete="off" />
-      </label>
-      <label class="eu-field">
-        <span class="eu-label">Motto</span>
-        <input class="eu-input" value={edits.motto ?? source.motto ?? ''} oninput={(event) => (edits.motto = event.currentTarget.value)} maxlength="200" autocomplete="off" />
-      </label>
-    </div>
-
     <label class="eu-field">
       <span class="eu-label">Format</span>
       <select class="eu-select" bind:value={format}>
@@ -266,6 +228,43 @@
         {/each}
       </div>
     </fieldset>
+    <label class="eu-field">
+      <span class="eu-label">Country</span>
+      <input class="eu-input" value={edits.name ?? source.name} oninput={(event) => (edits.name = event.currentTarget.value)} maxlength="80" autocomplete="off" placeholder="Your nation's name" />
+    </label>
+    <div class="pair">
+      <label class="eu-field">
+        <span class="eu-label">Capital</span>
+        <input class="eu-input" value={edits.capital ?? source.capital ?? ''} oninput={(event) => (edits.capital = event.currentTarget.value)} maxlength="80" autocomplete="off" />
+      </label>
+      <label class="eu-field">
+        <span class="eu-label">Motto</span>
+        <input class="eu-input" value={edits.motto ?? source.motto ?? ''} oninput={(event) => (edits.motto = event.currentTarget.value)} maxlength="200" autocomplete="off" />
+      </label>
+    </div>
+
+    <section aria-labelledby="sections-title" class="eu-stack sections-block">
+      <h2 id="sections-title" class="eu-label">In the profile: <span class="eu-data">{filled} of {SECTIONS.length}</span> sections{gold ? ', the full set' : ''}</h2>
+      <ul class="sections">
+        {#each SECTIONS as section (section)}
+          {@const there = data.filled.includes(section)}
+          {@const tool = tools[section]}
+          <li>
+            <span class="mark" class:there><Icon icon={there ? faCircleCheck : faCirclePlus} /></span>
+            <span class="what">{SECTION_LABEL[section]}</span>
+            {#if there}
+              <span class="eu-muted">on the card</span>
+            {:else if section === 'identity'}
+              <span class="eu-muted">type it in below</span>
+            {:else if tool}
+              <a href={tool.href} data-same-tab>Make it in {tool.name}</a>
+            {:else}
+              <span class="eu-muted">not yet</span>
+            {/if}
+          </li>
+        {/each}
+      </ul>
+    </section>
   </form>
 
   <section class="result" aria-labelledby="result-title">
