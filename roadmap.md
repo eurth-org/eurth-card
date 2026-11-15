@@ -10,7 +10,7 @@ Three parts: what comes next, what each release added (newest first), and what's
 
 How it stands:
 
-- `npm run check`, `npm run build`, `npm test` (281 tests, the suite's own checks among them) and `npm run axe` pass. CI is green on `main`, Lighthouse included.
+- `npm run check` (pages and components), `npm run build`, `npm test` (281 tests, the suite's own checks among them), `npm run axe` and `npm run smoke` pass, on @eurth/style 1.2.1 and @eurth/profile 1.0.1. The smoke test (the built site in real Chrome) and the component type check (`svelte-check`) came with the handbook after 1.0.1 and are in `package.json`. CI is green on `main`, Lighthouse included.
 - `npm run exports` opens the built site in Chrome and presses every button: 72 pictures (3 layouts, 6 formats, PNG and WebP, for a part-filled and a full profile), each read back at its exact size; a full profile loaded from its file; the wiki infobox compared with what Wiki writes, copied and its two pictures downloaded; a card opened from its link.
 - Astro needs Node 22.23 or later. On Stijn's Mac the default `node` is older: put `/opt/homebrew/bin` first on the `PATH` (Node 26).
 

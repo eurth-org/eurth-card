@@ -17,7 +17,7 @@
   import { calm, copyText, download, fileSlug, markdownText, playTones, toast } from '@eurth/style';
   import Icon from '@eurth/style/components/Icon.svelte';
   import ShareButtons from '@eurth/style/components/ShareButtons.svelte';
-  import { onMount } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import { describe, summary, title } from '../card/describe.ts';
   import { hasEdits, identityWith, withEdits, type Edits } from '../card/edit.ts';
   import { facts } from '../card/facts.ts';
@@ -55,7 +55,8 @@
   // Where the card on the table came from.
   let origin = $state<'sample' | 'link' | 'profile'>('sample');
   let profile = $state.raw<EurthProfile | null>(null);
-  let source = $state.raw<CardData>(sample);
+  // The example is only where the table starts: the props are read once, on purpose.
+  let source = $state.raw<CardData>(untrack(() => sample));
   let edits = $state<Edits>({});
   let format = $state<FormatId>(DEFAULT_FORMAT);
   let layoutId = $state<LayoutId>(DEFAULT_LAYOUT);
@@ -83,7 +84,7 @@
   const pristine = $derived(origin === 'sample' && !hasEdits(edits) && format === DEFAULT_FORMAT && layoutId === DEFAULT_LAYOUT && theme === DEFAULT_THEME);
 
   // The link is made off to one side (compressing takes a moment) and the address bar follows.
-  let link = $state.raw<CardLink>({ url: `${siteUrl}/`, length: siteUrl.length + 1, verdict: 'fine' });
+  let link = $state.raw<CardLink>(untrack(() => ({ url: `${siteUrl}/`, length: siteUrl.length + 1, verdict: 'fine' })));
   let turn = 0;
   $effect(() => {
     const state = { data, format, layout: layoutId, theme };
@@ -311,10 +312,12 @@
     {#if asWiki}
       <div class="eu-row heading">
         <h2 id="result-title" class="eu-kicker">{name}: wiki infobox</h2>
-        <span class="eu-data eu-muted">{wiki.lines} {wiki.lines === 1 ? 'line' : 'lines'}</span>
+        <span class="eu-data eu-muted">{wiki.lines} {wiki.lines === 1 ? 'field' : 'fields'}</span>
       </div>
 
       {#if wiki.named}
+        <!-- Focusable, so the keyboard can scroll it. -->
+        <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
         <pre class="eu-data eu-scroll wikitext" tabindex="0" aria-label="The infobox as wikitext">{wiki.wikitext}</pre>
 
         <div class="eu-row">

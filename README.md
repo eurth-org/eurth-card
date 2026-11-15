@@ -26,11 +26,12 @@ Node 22.23 or later (CI runs on Node 26).
 ```sh
 npm install
 npm run dev          # the site while you work
-npm run check        # types
+npm run check        # types, in pages and in components
 npm run build        # the static site, into dist/
 npm test             # the card's own tests and the suite's checks (they read dist/)
 npm run axe          # accessibility: every page, both themes
-npm run exports      # every format in every layout, as PNG and WebP, at its exact size (needs Chrome)
+npm run smoke        # the built site in real Chrome: headers, themes, nothing stored, offline
+npm run exports      # every format in every layout, as PNG and WebP, at its exact size, and the wiki infobox (needs Chrome)
 npm run preview      # the built site with its real headers (wrangler dev)
 npm run images       # icons and the sharing image, after changing the card's look
 npm run sheet        # every card for the example nations on one page, in out/
