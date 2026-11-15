@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "schema": 1,
+    "nation": "Teland",
+    "updated": "2026-11-15T12:00:00.000Z"
+  },
+  "identity": {
+    "commonName": "Teland",
+    "officialName": "Republic of Teland",
+    "capital": "Selunna",
+    "demonym": "Telandic",
+    "motto": "Steady against the tide",
+    "languages": [
+      "Telandic"
+    ],
+    "updated": "2026-11-15T12:00:00.000Z"
+  },
+  "wiki": {
+    "link": "https://wiki.eurth.org/?d=1.eyJjb252ZW50aW9uYWxfbG9uZ19uYW1lIjoiUmVwdWJsaWMgb2YgVGVsYW5kIiwiY29tbW9uX25hbWUiOiJUZWxhbmQiLCJuYXRpb25hbF9tb3R0byI6IlN0ZWFkeSBhZ2FpbnN0IHRoZSB0aWRlIiwiY2FwaXRhbCI6IlNlbHVubmEiLCJsYXJnZXN0X2NpdHkiOiJTZWx1bm5hIiwib2ZmaWNpYWxfbGFuZ3VhZ2VzIjoiVGVsYW5kaWMiLCJkZW1vbnltIjoiVGVsYW5kaWMiLCJnb3Zlcm5tZW50X3R5cGUiOiJQYXJsaWFtZW50YXJ5IHJlcHVibGljIiwibGVhZGVyX3RpdGxlMSI6IlByZXNpZGVudCIsImxlYWRlcl9uYW1lMSI6Ik1hZWxpbiBPc3RyZXZpbiIsImxlYWRlcl90aXRsZTIiOiJQcmltZSBNaW5pc3RlciIsImxlYWRlcl9uYW1lMiI6IkFlcmluIEthbGx1bmEiLCJsZWdpc2xhdHVyZSI6Ik5hdGlvbmFsIEFzc2VtYmx5Iiwic292ZXJlaWdudHlfdHlwZSI6IkluZGVwZW5kZW5jZSIsImVzdGFibGlzaGVkX2V2ZW50MSI6IkZvdW5kaW5nIG9mIFNlbHVubmEiLCJlc3RhYmxpc2hlZF9kYXRlMSI6IjExODQiLCJlc3RhYmxpc2hlZF9ldmVudDIiOiJSZXB1YmxpYyBkZWNsYXJlZCIsImVzdGFibGlzaGVkX2RhdGUyIjoiMTIgTWFyY2ggMTg3MSIsImFyZWFfa20yIjoiNTEyLDAwMCIsInBlcmNlbnRfd2F0ZXIiOiIyLjQiLCJwb3B1bGF0aW9uX2VzdGltYXRlIjoiNDgsMjAwLDAwMCIsInBvcHVsYXRpb25fZXN0aW1hdGVfeWVhciI6IjIwMjYiLCJHRFBfbm9taW5hbCI6IiQxLjk0IHRyaWxsaW9uIiwiR0RQX25vbWluYWxfeWVhciI6IjIwMjYiLCJjdXJyZW5jeSI6IlNlbHVuIiwiY3VycmVuY3lfY29kZSI6IlRMUyIsInV0Y19vZmZzZXQiOiIrMSIsImRhdGVfZm9ybWF0IjoiZGQtbW0teXl5eSIsImRyaXZlc19vbiI6InJpZ2h0IiwiY2N0bGQiOiIudGwiLCJjYWxsaW5nX2NvZGUiOiIrNDIifQ",
+    "summary": "Teland, officially the Republic of Teland. Capital and largest city: Selunna. Government: Parliamentary republic. Led by President Maelin Ostrevin and Prime Minister Aerin Kalluna. Population: 48.2 million. Area: 512,000 km². Currency: Selun (TLS). Drives on the right. Motto: “Steady against the tide”.",
+    "drivesOn": "right",
+    "callingCode": "+42",
+    "utcOffset": "+1",
+    "internetDomain": ".tl",
+    "dateFormat": "dd-mm-yyyy",
+    "updated": "2026-11-15T12:00:00.000Z"
+  }
+}

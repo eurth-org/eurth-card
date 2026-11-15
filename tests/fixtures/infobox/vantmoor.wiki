@@ -1,0 +1,33 @@
+{{Infobox country
+<!-- NAMES -->
+| conventional_long_name = Republic of Vantmoor
+| common_name            = Vantmoor
+<!-- SYMBOLS -->
+| image_flag             = Flag of Vantmoor.svg
+| alt_flag               = Flag of Vantmoor
+| image_coat             = Coat of arms of Vantmoor.png
+| alt_coat               = Coat of arms of Vantmoor
+| symbol_type            = Coat of arms
+| national_motto         = "Steady as the fen"
+<!-- GEOGRAPHY -->
+| image_map              = Map of Vantmoor.png
+| map_width              = 275px
+| alt_map                = Map of Vantmoor
+| map_caption            = Map of Vantmoor
+| capital                = [[Marrowgate]]
+| largest_city           = capital
+<!-- DEMOGRAPHICS -->
+| official_languages     = Vantmoorish
+| demonym                = Vantmoorish
+<!-- POLITICS -->
+| government_type        = Presidential republic
+| leader_title1          = President
+| leader_name1           = Ines Tarrow
+| legislature            = Common Assembly
+<!-- STATISTICS -->
+| area_km2               = 61,200
+| population_estimate    = 3,950,000
+| population_density_km2 = 64.5
+| GDP_nominal            = $87.4 billion
+| GDP_nominal_per_capita = $22,127
+}}

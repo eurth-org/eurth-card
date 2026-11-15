@@ -48,3 +48,11 @@ export function sectionTools(host: string): Partial<Record<SectionName, ToolLink
   }
   return out;
 }
+
+/**
+ * Wiki's address, if its door has opened when the site is built; null before. Card checks the
+ * design a profile brings from Wiki against it, and reads none while there is nothing to check.
+ */
+export function wikiSite(): string | null {
+  return launchedTools().find((tool) => tool.id === 'wiki')?.url.replace(/\/+$/, '') ?? null;
+}

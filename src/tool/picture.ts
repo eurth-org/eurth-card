@@ -5,7 +5,7 @@
 
 import * as clean from '../card/clean.ts';
 import type { Placed, PictureBox } from '../card/layout.ts';
-import type { CardData } from '../card/model.ts';
+import type { CardData, Picture } from '../card/model.ts';
 import { render, type Theme } from '../card/render.ts';
 
 export type PictureType = 'image/png' | 'image/webp';
@@ -67,6 +67,24 @@ export async function cardPicture(placed: Placed, data: CardData, theme: Theme, 
 
   return new Promise((resolve, reject) => {
     canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('The picture could not be made.'))), type, 0.92);
+  });
+}
+
+/**
+ * The flag or the arms alone, as a PNG for a wiki that was told to expect one: 1,200 wide, in
+ * the picture's own proportions, see-through wherever the drawing leaves room.
+ */
+export async function lonePicture(source: Picture, width = 1200): Promise<Blob> {
+  const ratio = clean.svgRatio(source.svg) ?? source.ratio;
+  const height = Math.max(1, Math.round(width / ratio));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error('This browser has no canvas to draw on.');
+  context.drawImage(await image(sized(source.svg, width, height)), 0, 0, width, height);
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('The picture could not be made.'))), 'image/png');
   });
 }
 

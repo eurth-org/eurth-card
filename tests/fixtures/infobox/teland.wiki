@@ -1,0 +1,51 @@
+{{Infobox country
+<!-- NAMES -->
+| conventional_long_name   = Republic of Teland
+| common_name              = Teland
+<!-- SYMBOLS -->
+| image_flag               = Flag of Teland.png
+| alt_flag                 = Flag of Teland
+| image_coat               = Coat of arms of Teland.png
+| alt_coat                 = Coat of arms of Teland
+| symbol_type              = Coat of arms
+| national_motto           = "Steady against the tide"
+<!-- GEOGRAPHY -->
+| image_map                = Map of Teland.png
+| map_width                = 275px
+| alt_map                  = Map of Teland
+| map_caption              = Map of Teland
+| capital                  = [[Selunna]]
+| largest_city             = capital
+<!-- DEMOGRAPHICS -->
+| official_languages       = Telandic
+| demonym                  = Telandic
+<!-- POLITICS -->
+| government_type          = Parliamentary republic
+| leader_title1            = President
+| leader_name1             = Maelin Ostrevin
+| leader_title2            = Prime Minister
+| leader_name2             = Aerin Kalluna
+| legislature              = National Assembly
+<!-- HISTORY -->
+| sovereignty_type         = Independence
+| established_event1       = Founding of Selunna
+| established_date1        = 1184
+| established_event2       = Republic declared
+| established_date2        = 12 March 1871
+<!-- STATISTICS -->
+| area_km2                 = 512,000
+| percent_water            = 2.4
+| population_estimate      = 48,200,000
+| population_estimate_year = 2026
+| population_density_km2   = 94.1
+| GDP_nominal              = $1.94 trillion
+| GDP_nominal_year         = 2026
+| GDP_nominal_per_capita   = $40,249
+| currency                 = Selun
+| currency_code            = TLS
+| utc_offset               = +1
+| date_format              = dd-mm-yyyy
+| drives_on                = right
+| cctld                    = .tl
+| calling_code             = +42
+}}

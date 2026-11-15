@@ -6,7 +6,7 @@ import Page from '@eurth/style/components/Page.astro';
 import { site } from '../../eurth.config.mjs';
 import { EXAMPLES } from '../card/examples.ts';
 import { readCard } from '../card/read.ts';
-import { cardThemes, sectionTools } from '../site/build.ts';
+import { cardThemes, sectionTools, wikiSite } from '../site/build.ts';
 import Card from '../tool/Card.svelte';
 
 // The card on the table before the visitor brings their own. Only the card's data goes to the
@@ -29,6 +29,10 @@ const faq = [
   {
     q: 'What if my profile is nearly empty?',
     a: 'The card shows whatever is there, and looks finished at every stage: a name alone makes a card. The list beside it says which parts are missing, and you can type a name, a capital and a motto here.',
+  },
+  {
+    q: 'Can I put my nation on a wiki with this?',
+    a: 'Yes. Choose the format Wiki infobox and Card writes the box of key facts as wikitext, the code a wiki page is written in. Copy it, paste it at the top of your nation\'s page on IIWiki, and upload the flag and the coat of arms under the file names it gives you.',
   },
   {
     q: 'Why does the card not carry the Eurth logo?',
@@ -64,7 +68,7 @@ const faq = [
     </header>
 
     <!-- client:load draws the tool as real HTML first, then wakes it up. -->
-    <Card client:load siteName={site.name} siteUrl={site.url} themes={cardThemes()} tools={sectionTools(site.host)} sample={sample} />
+    <Card client:load siteName={site.name} siteUrl={site.url} themes={cardThemes()} tools={sectionTools(site.host)} wikiSite={wikiSite()} sample={sample} />
 
     <section class="eu-prose">
       <h2>How it works</h2>
@@ -72,6 +76,7 @@ const faq = [
         <li>Press Load profile and pick your nation's file, or drop it anywhere on the page. No profile yet? Type a name, a capital and a motto, and that is a card already.</li>
         <li>Choose a format for where the card is going, one of three layouts, and Night or Light.</li>
         <li>Download the picture, or copy the link, the picture or the description. The link holds the whole card.</li>
+        <li>For a wiki, choose the format Wiki infobox: the same facts as wikitext, ready to paste into your nation's page on IIWiki.</li>
       </ol>
       <p>
         The <a href="/guide/">guide</a> explains how to fill a profile, the <a href="/glossary/">glossary</a> has the words, and the

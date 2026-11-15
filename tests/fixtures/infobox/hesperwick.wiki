@@ -1,0 +1,16 @@
+{{Infobox country
+<!-- NAMES -->
+| conventional_long_name = Hesperwick
+| common_name            = Hesperwick
+<!-- SYMBOLS -->
+| image_flag             = Flag of Hesperwick.png
+| alt_flag               = Flag of Hesperwick
+| image_coat             = Coat of arms of Hesperwick.png
+| alt_coat               = Coat of arms of Hesperwick
+| symbol_type            = Coat of arms
+<!-- GEOGRAPHY -->
+| image_map              = Map of Hesperwick.png
+| map_width              = 275px
+| alt_map                = Map of Hesperwick
+| map_caption            = Map of Hesperwick
+}}

@@ -82,7 +82,7 @@ export const TERMS: readonly Term[] = [
   {
     id: 'infobox',
     term: 'Infobox',
-    definition: 'The box of key facts at the top right of a wiki article about a country. A fact card is an infobox that travels without its article.',
+    definition: 'The box of key facts at the top right of a wiki article about a country. A fact card is an infobox that travels without its article; Card also writes the infobox itself, as wikitext for IIWiki.',
   },
   {
     id: 'key-facts',
@@ -140,5 +140,10 @@ export const TERMS: readonly Term[] = [
     id: 'timeline-strip',
     term: 'Timeline strip',
     definition: 'A handful of dated events along a line, earliest first: a nation’s history at a glance.',
+  },
+  {
+    id: 'wikitext',
+    term: 'Wikitext',
+    definition: 'The plain-text code a wiki page is written in: double square brackets for a link, double braces for a template such as an infobox. Card writes it for you to paste; the wiki turns it into the page.',
   },
 ];

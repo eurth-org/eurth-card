@@ -1,0 +1,40 @@
+{{Infobox country
+<!-- NAMES -->
+| conventional_long_name = Kingdom of Calderwyn
+| common_name            = Calderwyn
+<!-- SYMBOLS -->
+| image_flag             = Flag of Calderwyn.svg
+| alt_flag               = Flag of Calderwyn
+| image_coat             = Coat of arms of Calderwyn.svg
+| alt_coat               = Coat of arms of Calderwyn
+| symbol_type            = Coat of arms
+| national_motto         = "By tide and by lantern"
+| national_anthem        = "Lanterns on the Water"
+<!-- GEOGRAPHY -->
+| image_map              = Map of Calderwyn.png
+| map_width              = 275px
+| alt_map                = Map of Calderwyn
+| map_caption            = Map of Calderwyn
+| capital                = [[Haldermouth]]
+| largest_city           = capital
+<!-- DEMOGRAPHICS -->
+| official_languages     = Calderwynian, Low Eskish
+| demonym                = Calderwynian
+<!-- POLITICS -->
+| government_type        = Parliamentary constitutional monarchy
+| leader_title1          = Queen
+| leader_name1           = Ysolde III
+| leader_title2          = First Minister
+| leader_name2           = Corin Ashdale
+| legislature            = The Moot
+<!-- STATISTICS -->
+| area_km2               = 148,300
+| population_estimate    = 12,480,000
+| population_density_km2 = 84.2
+| GDP_nominal            = $512 billion
+| GDP_nominal_per_capita = $41,026
+| currency               = Calder mark
+| currency_code          = CWM
+| date_format            = Lantern Reckoning (LR)
+| drives_on              = left
+}}

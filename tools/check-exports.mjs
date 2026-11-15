@@ -113,6 +113,30 @@ try {
   if (share < 0.06) fail(`the flag is missing from the exported picture (only ${(share * 100).toFixed(1)}% of it is the flag's blue)`);
   else console.log(`The flag is in the exported picture (${(share * 100).toFixed(0)}% of it is the flag's blue).`);
 
+  // The wiki infobox: the same wikitext Wiki writes, copied whole, with the pictures under the
+  // names it asks for.
+  const expected = readFileSync(fileURLToPath(new URL('../tests/fixtures/infobox/calderwyn.wiki', import.meta.url)), 'utf8').trimEnd();
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.locator('select.eu-select').selectOption('infobox');
+  const shown = await page.locator('pre.wikitext').textContent();
+  if (shown !== expected) fail('the wiki infobox on the page is not the one Wiki writes for the same profile');
+  if (await page.locator('input[name="layout"]').count()) fail('the layouts should step aside for the wiki infobox');
+  await page.getByRole('button', { name: 'Copy wikitext' }).click();
+  await page.getByRole('button', { name: 'Copied' }).waitFor({ timeout: 5000 }).catch(() => fail('Copy wikitext should say it copied'));
+  if ((await page.evaluate(() => navigator.clipboard.readText())) !== expected) fail('Copy wikitext should put the whole infobox on the clipboard');
+  for (const [button, name] of [['Flag for the wiki', 'Flag of Calderwyn.svg'], ['Arms for the wiki', 'Coat of arms of Calderwyn.svg']]) {
+    const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: button }).click()]);
+    if (download.suggestedFilename() !== name) fail(`${button}: wanted the file "${name}", got "${download.suggestedFilename()}"`);
+    if (!expected.includes(`= ${name}\n`)) fail(`the infobox should ask for "${name}"`);
+    const file = join(folder, download.suggestedFilename());
+    await download.saveAs(file);
+    if (!readFileSync(file, 'utf8').includes('<svg')) fail(`${button}: the file should be the drawing itself`);
+  }
+  await page.locator('select.eu-select').selectOption('square');
+  if (!(await page.locator('#result-title').textContent())?.includes('square')) fail('the card should come back after the wiki infobox');
+  await page.locator('select.eu-select').selectOption('preview');
+  console.log(`The wiki infobox is the one Wiki writes (${expected.split('\n').length - 2} lines), copies whole, and hands over the flag and the arms under its own names.`);
+
   // 3. A card opened from its link, as someone following a shared link would.
   const link = page.url();
   const second = await context.newPage();
@@ -120,7 +144,9 @@ try {
   await second.locator('#result-title').filter({ hasText: 'Kingdom of Calderwyn' }).waitFor({ timeout: 5000 }).catch(() => fail('a card link should open its card'));
   if (!(await second.locator('#sections-title').textContent())?.includes('16 of 16')) fail('a card from a link should know its sections');
   if (!(await second.locator('input[name="layout"][value="banner"]').isChecked())) fail('a card from a link should keep its layout');
-  console.log(`A card opens from its link (${link.length} characters).`);
+  await second.locator('select.eu-select').selectOption('infobox');
+  if ((await second.locator('pre.wikitext').textContent()) !== expected) fail('a card from a link should write the same wiki infobox as its profile');
+  console.log(`A card opens from its link (${link.length} characters), and writes the same infobox.`);
   await second.close();
 
   // 4. A link that holds nothing readable falls back to the example, and says so.

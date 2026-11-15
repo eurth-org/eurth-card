@@ -7,20 +7,22 @@
    *   - A profile and a link are someone else's input: both go through the engine's reader.
    *   - The profile's flag and arms only ever appear through an image, never as markup.
    *   - Card writes one section of the profile, "identity", and only what was typed here.
+   *   - The wiki infobox is wikitext to copy: it is shown as text, never run as markup.
    *   - Colours, tools and the example arrive as props: browser code never imports
    *     eurth.config.mjs or the list of tools.
    */
-  import { faCheck, faCircleCheck, faCirclePlus, faDownload, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
+  import { faCheck, faCircleCheck, faCirclePlus, faCopy, faDownload, faRotateLeft } from '@fortawesome/free-solid-svg-icons';
   import { createProfile, getSection, setSection, type EurthProfile } from '@eurth/profile';
   import ProfileButtons from '@eurth/profile/ProfileButtons.svelte';
-  import { calm, download, fileSlug, markdownText, playTones, toast } from '@eurth/style';
+  import { calm, copyText, download, fileSlug, markdownText, playTones, toast } from '@eurth/style';
   import Icon from '@eurth/style/components/Icon.svelte';
   import ShareButtons from '@eurth/style/components/ShareButtons.svelte';
   import { onMount } from 'svelte';
   import { describe, summary, title } from '../card/describe.ts';
   import { hasEdits, identityWith, withEdits, type Edits } from '../card/edit.ts';
   import { facts } from '../card/facts.ts';
-  import { DEFAULT_FORMAT, DEFAULT_LAYOUT, DEFAULT_THEME, FORMATS, LAYOUTS, THEMES, type FormatId, type LayoutId, type ThemeId } from '../card/formats.ts';
+  import { DEFAULT_FORMAT, DEFAULT_LAYOUT, DEFAULT_THEME, FORMATS, LAYOUTS, THEMES, formatOf, type FormatId, type LayoutId, type ThemeId } from '../card/formats.ts';
+  import { infobox, isSvgName, pngName, type WikiFile } from '../card/infobox.ts';
   import { layout } from '../card/layout.ts';
   import { LINK_PARAM, cardLink, readLink, type CardLink } from '../card/link.ts';
   import { SECTIONS, SECTION_LABEL, complete, displayName, type CardData, type SectionName } from '../card/model.ts';
@@ -28,13 +30,14 @@
   import { dataAddress, render, type Theme } from '../card/render.ts';
   import type { Measure } from '../card/text.ts';
   import { browserMeasure } from './measure.ts';
-  import { cardPicture, extension, type PictureType } from './picture.ts';
+  import { cardPicture, extension, lonePicture, type PictureType } from './picture.ts';
 
   let {
     siteName,
     siteUrl,
     themes,
     tools,
+    wikiSite = null,
     sample,
   }: {
     siteName: string;
@@ -43,6 +46,8 @@
     themes: Record<ThemeId, Theme>;
     /** For each section, the tool that fills it, if it has launched. */
     tools: Partial<Record<SectionName, { name: string; href: string }>>;
+    /** Wiki's address, once its door has opened: what a profile saved there is checked against. */
+    wikiSite?: string | null;
     /** The card on the table before the visitor brings their own. */
     sample: CardData;
   } = $props();
@@ -55,6 +60,9 @@
   let format = $state<FormatId>(DEFAULT_FORMAT);
   let layoutId = $state<LayoutId>(DEFAULT_LAYOUT);
   let theme = $state<ThemeId>(DEFAULT_THEME);
+  // The one format that isn't a picture: the card as wikitext, to paste into a wiki page.
+  let asWiki = $state(false);
+  let copied = $state(false);
 
   let ready = $state(false);
   let measure = $state.raw<Measure | undefined>(undefined);
@@ -140,6 +148,7 @@
     format = DEFAULT_FORMAT;
     layoutId = DEFAULT_LAYOUT;
     theme = DEFAULT_THEME;
+    asWiki = false;
     origin = 'sample';
     toast('A clear table.');
   }
@@ -153,6 +162,34 @@
     const identity = identityWith(getSection(base, 'identity') as Record<string, unknown> | undefined, edits);
     return setSection(base, 'identity', identity as never);
   });
+
+  // The infobox is Wiki's own writing. A loaded profile is read as Wiki reads it, typed changes
+  // included; a card from a link, or the example, speaks for itself.
+  const wiki = $derived(infobox(data, { profile: origin === 'profile' ? saved : undefined, wikiSite }));
+
+  function choose(value: string) {
+    asWiki = value === 'infobox';
+    if (!asWiki) format = formatOf(value).id;
+  }
+
+  async function copyWikitext() {
+    const ok = await copyText(wiki.wikitext);
+    toast(ok ? 'Infobox copied. Paste it at the top of your page.' : "That didn't copy. Your browser may not allow it here.");
+    if (!ok) return;
+    copied = true;
+    setTimeout(() => (copied = false), 2000);
+  }
+
+  // A picture for the wiki, under the name the infobox asks for: the drawing itself when that
+  // name ends in .svg, a PNG of it otherwise.
+  async function saveFile(file: WikiFile) {
+    if (isSvgName(file.name)) return download(file.picture.svg, file.name, 'image/svg+xml');
+    try {
+      download(await lonePicture(file.picture), pngName(file.name));
+    } catch {
+      toast("That picture couldn't be drawn here. Another browser may manage it.");
+    }
+  }
 
   async function save(type: PictureType) {
     try {
@@ -196,13 +233,15 @@
 
     <label class="eu-field">
       <span class="eu-label">Format</span>
-      <select class="eu-select" bind:value={format}>
+      <select class="eu-select" value={asWiki ? 'infobox' : format} onchange={(event) => choose(event.currentTarget.value)}>
         {#each FORMATS as entry (entry.id)}
           <option value={entry.id}>{entry.name} · {entry.width} × {entry.height}</option>
         {/each}
+        <option value="infobox">Wiki infobox · wikitext</option>
       </select>
     </label>
 
+    {#if !asWiki}
     <fieldset class="options">
       <legend class="eu-label">Layout</legend>
       <div class="eu-row">
@@ -228,6 +267,7 @@
         {/each}
       </div>
     </fieldset>
+    {/if}
     <label class="eu-field">
       <span class="eu-label">Country</span>
       <input class="eu-input" value={edits.name ?? source.name} oninput={(event) => (edits.name = event.currentTarget.value)} maxlength="80" autocomplete="off" placeholder="Your nation's name" />
@@ -268,24 +308,63 @@
   </form>
 
   <section class="result" aria-labelledby="result-title">
-    <div class="eu-row heading">
-      <h2 id="result-title" class="eu-kicker">{name}: {size.name.toLowerCase()}</h2>
-      <span class="eu-data eu-muted">{size.width} × {size.height}</span>
-    </div>
+    {#if asWiki}
+      <div class="eu-row heading">
+        <h2 id="result-title" class="eu-kicker">{name}: wiki infobox</h2>
+        <span class="eu-data eu-muted">{wiki.lines} {wiki.lines === 1 ? 'line' : 'lines'}</span>
+      </div>
 
-    <div class="table">
-      {#key dealt}
-        <div class="dealt" class:deal={moving && dealt > 0} style:--ratio={size.width / size.height}>
-          <img class="face" src={picture} alt={description} width={size.width} height={size.height} />
-          <div class="back" aria-hidden="true"></div>
+      {#if wiki.named}
+        <pre class="eu-data eu-scroll wikitext" tabindex="0" aria-label="The infobox as wikitext">{wiki.wikitext}</pre>
+
+        <div class="eu-row">
+          <button type="button" class="eu-btn eu-btn--primary" data-click="bounce" onclick={copyWikitext}>
+            <Icon icon={copied ? faCheck : faCopy} />
+            {copied ? 'Copied' : 'Copy wikitext'}
+          </button>
+          {#each wiki.files as file (file.kind)}
+            <button type="button" class="eu-btn" data-click="bounce" onclick={() => saveFile(file)}>
+              <Icon icon={faDownload} />
+              {file.kind === 'flag' ? 'Flag for the wiki' : 'Arms for the wiki'}
+            </button>
+          {/each}
         </div>
-      {/key}
-    </div>
 
-    <div class="eu-row">
-      <button type="button" class="eu-btn eu-btn--primary" data-click="bounce" onclick={() => save('image/png')}><Icon icon={faDownload} /> PNG</button>
-      <button type="button" class="eu-btn" data-click="bounce" onclick={() => save('image/webp')}><Icon icon={faDownload} /> WebP</button>
-    </div>
+        <p class="eu-help note">
+          Paste it at the top of your nation's page on IIWiki.
+          {#if wiki.files.length}
+            The {wiki.files.length === 1 ? 'download carries the name' : 'downloads carry the names'} the infobox asks for, such as “{wiki.files[0]?.name}”: upload {wiki.files.length === 1 ? 'it as it is' : 'them as they are'}.
+          {/if}
+          {#if wiki.wanted.length}
+            The infobox also asks for {wiki.wanted.map((file) => `“${file}”`).join(' and ')}: upload a picture of your own under {wiki.wanted.length === 1 ? 'that name' : 'each name'}, or take {wiki.wanted.length === 1 ? 'its' : 'their'} lines out.
+          {/if}
+          {#if tools.wiki}
+            <a href={tools.wiki.href} data-same-tab>{tools.wiki.name} writes the rest of the page.</a>
+          {/if}
+        </p>
+      {:else}
+        <p class="eu-help note">Give the nation a name first: the infobox, and the pictures that go with it, are named after it.</p>
+      {/if}
+    {:else}
+      <div class="eu-row heading">
+        <h2 id="result-title" class="eu-kicker">{name}: {size.name.toLowerCase()}</h2>
+        <span class="eu-data eu-muted">{size.width} × {size.height}</span>
+      </div>
+
+      <div class="table">
+        {#key dealt}
+          <div class="dealt" class:deal={moving && dealt > 0} style:--ratio={size.width / size.height}>
+            <img class="face" src={picture} alt={description} width={size.width} height={size.height} />
+            <div class="back" aria-hidden="true"></div>
+          </div>
+        {/key}
+      </div>
+
+      <div class="eu-row">
+        <button type="button" class="eu-btn eu-btn--primary" data-click="bounce" onclick={() => save('image/png')}><Icon icon={faDownload} /> PNG</button>
+        <button type="button" class="eu-btn" data-click="bounce" onclick={() => save('image/webp')}><Icon icon={faDownload} /> WebP</button>
+      </div>
+    {/if}
 
     <ShareButtons
       url={shareUrl}
@@ -464,6 +543,18 @@
 
   .note {
     margin: 0;
+  }
+
+  /* Wikitext is shown as it will be pasted: one parameter a line, never wrapped. */
+  .wikitext {
+    max-height: min(72vh, 46rem);
+    margin: 0;
+    padding: var(--space-3);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    overflow: auto;
+    white-space: pre;
   }
 
   .words summary {
