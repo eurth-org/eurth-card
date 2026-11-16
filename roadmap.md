@@ -15,11 +15,11 @@ How it stands:
 - Astro needs Node 22.23 or later. On Stijn's Mac the default `node` is older: put `/opt/homebrew/bin` first on the `PATH` (Node 26).
 
 - The wiki infobox is built. Wiki's repository already held a writer for it, tried on IIWiki with all four examples, so Card copies that writer (`src/card/wiki/`, from eurth-wiki at commit 825aafe) and is held to Wiki's own output by `tests/fixtures/infobox/`. Stijn's word on where the shared code lives: in Card first.
+- The gold edge keeps `caution-text` (`#ffc673` at Night, `#7a4100` in light): Stijn's word on 16 November 2026. No `gold` token is asked of @eurth/style.
 
 Waiting on Stijn:
 
-1. **A gold token.** The kit has no gold, so the gold edge uses `caution-text` (`#ffc673` at Night, `#7a4100` in light). Either that will do, or @eurth/style gets a `gold` token and `src/site/build.ts` takes it.
-2. **A look by eye.** The card is dealt and flips when a profile loads; the checks can tell that it works, not that it looks right. Open `npm run preview`, load a profile, and say what to change. The same for the Wiki infobox format: paste Calderwyn's into a sandbox on IIWiki once, from Card.
+1. **A look by eye.** The card is dealt and flips when a profile loads; the checks can tell that it works, not that it looks right. Open `npm run preview`, load a profile, and say what to change. The same for the Wiki infobox format: paste Calderwyn's into a sandbox on IIWiki once, from Card.
 
 ## Next
 
@@ -58,5 +58,6 @@ The first version, as it stands in the repository.
 
 - **Storing cards, accounts, or a gallery.** A card lives in its link, its picture or the profile file. Nothing is kept anywhere.
 - **Editing other tools' sections.** Card reads everything and writes only `identity`. To change the flag, open the tool that made it; the list on the page links to each tool.
+- **A gold token of the card's own.** The gold edge uses the kit's `caution-text`, in both themes. Decided on 16 November 2026: it reads as gold on the card, and one colour fewer in the kit is one fewer to keep in step.
 - **The Eurth logo on the card.** The card is in-world material. It carries only the line "card.eurth.org".
 - **Anything that could bill.** No paid Workers plan, no image service, no storage. If per-card previews don't fit the Free plan, they don't ship.

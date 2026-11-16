@@ -12,8 +12,8 @@ type Tokens = Parameters<typeof resolveColors>[0];
 
 /**
  * The card's two themes, from the suite's tokens. A picture can't use custom properties, so
- * the colours go in as plain values. The kit has no gold: caution-text stands in for the edge
- * of a complete nation's card.
+ * the colours go in as plain values. The kit has no gold, and isn't getting one: caution-text is
+ * the edge of a complete nation's card, in both themes (decided on 16 November 2026).
  */
 export function cardThemes(): Record<ThemeId, Theme> {
   const dark = resolveColors(tokens as unknown as Tokens, 'dark');
